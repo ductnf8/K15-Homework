@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>JSX + Babel Practice</title>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Babel để trình duyệt hiểu JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        /* Base style cho button/a */
+        button, a {
+            display: inline-block;
+            background: #ddd;
+            border: none;
+            color: #333;
+            cursor: pointer;
+            padding: 10px 16px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+            margin: 6px;
+        }
+
+        button:hover, a:hover {
+            opacity: 0.8;
+        }
+
+        /* Biến thể */
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #3399ff;
+        }
+
+        .btn-rounded {
+            border-radius: 20px;
+        }
+
+        .btn-bordered {
+            border: 2px solid #007bff;
+            background: transparent;
+            color: #007bff;
+        }
+
+        .btn-bordered:hover {
+            background: #cce5ff;
+        }
+
+        /* Kích cỡ */
+        .btn-s {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-m {
+            padding: 10px 16px;
+            font-size: 14px;
+        }
+
+        .btn-l {
+            padding: 14px 24px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+    // 🧠 Component Button
+    function Button({primary, rounded, bordered, href, size = "m", children, ...rest}) {
+        // Gộp các class tương ứng
+        const classes = [
+            primary && "btn-primary",
+            rounded && "btn-rounded",
+            bordered && "btn-bordered",
+            `btn-${size}`
+        ].filter(Boolean).join(' ');
+
+        // Nếu có href → dùng thẻ <a>, ngược lại → <button>
+        if (href) {
+            return (
+                <a className={classes} href={href} {...rest}>
+                    {children}
+                </a>
+            );
+        }
+
+        return (
+            <button className={classes} {...rest}>
+                {children}
+            </button>
+        );
+    }
+
+    // 🧩 Render nhiều nút khác nhau
+    const App = () => (
+        <div>
+            <h1>Demo Button Component</h1>
+
+            {/* 1. Button thường */}
+            <Button type="button">Button normal</Button>
+
+            {/* 2. Button primary, rounded, bordered */}
+            <Button type="submit" primary rounded bordered>
+                Button primary rounded bordered
+            </Button>
+
+            {/* 3. Button rounded */}
+            <Button rounded>Button rounded</Button>
+
+            {/* 4. Button bordered */}
+            <Button bordered>Button bordered</Button>
+
+            {/* 5. Button dạng link */}
+            <Button href="https://google.com" target="_blank" primary>
+                Button là link (Google)
+            </Button>
+        </div>
+    );
+
+    // Render ra root
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App/>);
+</script>
+</body>
+</html>
