@@ -19,7 +19,7 @@
         }
 
         /* Base style cho button/a */
-        button, a {
+        .btn {
             display: inline-block;
             background: #ddd;
             border: none;
@@ -32,7 +32,7 @@
             margin: 6px;
         }
 
-        button:hover, a:hover {
+        .btn:hover {
             opacity: 0.8;
         }
 
@@ -82,17 +82,17 @@
 <div id="root"></div>
 
 <script type="text/babel">
-    // 🧠 Component Button
+    //  Component Button
     function Button({primary, rounded, bordered, href, size = "m", children, ...rest}) {
         // Gộp các class tương ứng
         const classes = [
+            "btn", // thêm class gốc
             primary && "btn-primary",
             rounded && "btn-rounded",
             bordered && "btn-bordered",
             `btn-${size}`
         ].filter(Boolean).join(' ');
 
-        // Nếu có href → dùng thẻ <a>, ngược lại → <button>
         if (href) {
             return (
                 <a className={classes} href={href} {...rest}>
@@ -128,7 +128,7 @@
             <Button bordered>Button bordered</Button>
 
             {/* 5. Button dạng link */}
-            <Button href="https://google.com" target="_blank" primary>
+            <Button href="https://google.com" target="_blank" rel="noopener noreferrer" primary>
                 Button là link (Google)
             </Button>
         </div>

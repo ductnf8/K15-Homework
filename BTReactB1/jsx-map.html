@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>JSX + Babel - Render danh sách với map()</title>
+
+    <!-- React, ReactDOM và Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- CSS nội bộ -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f0f0f0;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        li:hover {
+            background: #e0e0e0;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+    // 🧩 Mảng tasks
+    const tasks = [
+        {id: 1, title: "Task 1", isCompleted: true},
+        {id: 2, title: "Task 2", isCompleted: false},
+        {id: 3, title: "Task 3", isCompleted: true},
+        {id: 4, title: "Task 4", isCompleted: false},
+        {id: 5, title: "Task 5", isCompleted: false}
+    ];
+
+    // Component App
+    const App = () => (
+        <div>
+            <h2>Danh sách công việc</h2>
+            <ul>
+                {tasks.map(task => (
+                    <li
+                        key={task.id}
+                        className={task.isCompleted ? "completed" : ""}
+                    >
+                        {task.title}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+
+    // 🖥 Render ra DOM
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App/>);
+</script>
+</body>
+</html>
